@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <meta charset=utf-8 />
+  <title>ks-splitter</title>
+  <link rel="stylesheet" href="css/style.css" media="screen" type="text/css" />
+  <style>
+    body
+    {
+      margin: 0px;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .pane-container
+    {
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+
+
+  <div ks-splitter="" orientation="horizontal">
+    <div ks-pane="" min-size="100">
+      <div ks-pane-container>
+        <div>pane1</div>
+      </div>
+    </div>
+
+    <div ks-pane="" min-size="100">
+      <div ks-pane-container>
+        <div>pane2</div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="js/ks.splitter.js"></script>
+
+  <script>
+    angular.module('myApp', ['ks.splitter']);
+  </script>
+</body>
+</html>
