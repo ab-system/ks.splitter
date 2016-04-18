@@ -16,13 +16,14 @@ angular.module('ks.splitter', [])
                     var $pane = $(pane);
                     $pane.children('[ks-pane-container]').addClass('pane-container');
                     $pane.addClass('split-pane' + (index + 1));
-                    var minSize = $pane.attr('min-size');
-                    scope.panes.push({elem: $pane, minSize: parseInt(minSize)});
+                    scope.panes.push({elem: $pane, minSize: parseInt($pane.attr('min-size'))});
                   });
 
               if (scope.panes.length != 2) {
                 throw 'splitter must have two panes';
               }
+
+              scope.panes[0].size = parseInt(scope.panes[0].elem.attr('size'));
 
             },
 
@@ -38,36 +39,43 @@ angular.module('ks.splitter', [])
 
               pane1.elem.after(handler);
 
+              function setPosition(params){
+                if (vertical) {
+
+                  var height = params.bounds.bottom - params.bounds.top;
+                  if (params.position < pane1Min) return;
+                  if (height - params.position < pane2Min) return;
+
+                  handler.css('top', params.position + 'px');
+                  pane1.elem.css('height', params.position + 'px');
+                  pane2.elem.css('top', params.position + 'px');
+
+                } else {
+                  var width = params.bounds.right - params.bounds.left;
+                  if (params.position < pane1Min) return;
+                  if (width - params.position < pane2Min) return;
+
+                  handler.css('left', params.position + 'px');
+                  pane1.elem.css('width', params.position + 'px');
+                  pane2.elem.css('left', params.position + 'px');
+                }
+              }
+
               function mousemoveHandler(ev) {
                 if (!drag) return;
 
                 var bounds = element[0].getBoundingClientRect();
-                var pos = 0;
+                var params = {
+                  position: 0,
+                  bounds: bounds
+              };
 
                 if (vertical) {
-
-                  var height = bounds.bottom - bounds.top;
-                  pos = ev.clientY - bounds.top;
-
-                  if (pos < pane1Min) return;
-                  if (height - pos < pane2Min) return;
-
-                  handler.css('top', pos + 'px');
-                  pane1.elem.css('height', pos + 'px');
-                  pane2.elem.css('top', pos + 'px');
-
+                  params.position = ev.clientY - bounds.top;
                 } else {
-
-                  var width = bounds.right - bounds.left;
-                  pos = ev.clientX - bounds.left;
-
-                  if (pos < pane1Min) return;
-                  if (width - pos < pane2Min) return;
-
-                  handler.css('left', pos + 'px');
-                  pane1.elem.css('width', pos + 'px');
-                  pane2.elem.css('left', pos + 'px');
+                  params.position = ev.clientX - bounds.left;
                 }
+                setPosition(params);
               };
 
               function mouseupHandler (ev) {
@@ -77,6 +85,11 @@ angular.module('ks.splitter', [])
               function mousedownHandler (ev) {
                 ev.preventDefault();
                 drag = true;
+              }
+
+
+              if(pane1.size){
+                setPosition({ position: pane1.size, bounds: element[0].getBoundingClientRect() });
               }
 
               element.on('mousemove', mousemoveHandler);
