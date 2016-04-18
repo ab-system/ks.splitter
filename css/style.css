@@ -41,6 +41,9 @@
   /*left: 50%;*/
   right: 0px;
   overflow-y: auto;
+}
+
+.split-panes.horizontal.split-collapsed > .split-pane2{
   width: 100%;
 }
 

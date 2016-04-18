@@ -101,12 +101,14 @@ angular.module('ks.splitter', [])
               function collpseClick(){
                 var width = pane1.elem.css('width');
                 if(isCollapsed){
+                  element.removeClass('split-collapsed')
                   pane1.elem.css('left', '');
                   pane2.elem.css('left', width);
                   $handler.css('left', width);
                   $collapseBtn.addClass('fa-caret-left');
                   $collapseBtn.removeClass('fa-caret-right');
                 } else {
+                  element.addClass('split-collapsed');
                   pane1.elem.css('left', '-' + width);
                   pane2.elem.css('left', '');
                   $handler.css('left', '');
