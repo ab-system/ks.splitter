@@ -20,9 +20,10 @@
 {
   width: 4px;
   top: 0px; 
-  left: 50%;
+  /*left: 50%;*/
   bottom: 0px;
   cursor: ew-resize;
+  background-color: rgba(60, 70, 80, 0.15);
 }
 
 .split-panes.horizontal > .split-pane1,
@@ -34,15 +35,32 @@
 
 .split-panes.horizontal > .split-pane1
 {
-  width: 50%; 
+  width: 50%;
 }
 
 .split-panes.horizontal > .split-pane2
 {
   left: 50%;
   right: 0px;
-  border-left: 1px solid #aaa;
   overflow-y: auto
+}
+
+.split-panes.horizontal > .split-handler > .collapse {
+  position: absolute;
+  top: 50%;
+  color: #333;
+  background-color: #fff;
+  padding: 7px 1px 1px 1px;
+  height: 24px;
+  border: 1px solid rgba(60, 70, 80, 0.15);
+  cursor: pointer;
+  left: 0;
+  margin-top: -20px;
+
+}
+
+.split-panes.horizontal > .split-handler:hover {
+  background-color: rgba(60, 70, 80, 0.5);
 }
 
 
@@ -51,10 +69,11 @@
 .split-panes.vertical > .split-handler
 {
   height: 4px;
-  top: 50%; 
+  /*top: 50%; */
   left: 0px;
   right: 0px;
   cursor: ns-resize;
+  background-color: rgba(60, 70, 80, 0.15);
 }
 
 .split-panes.vertical > .split-pane1,

@@ -23,13 +23,24 @@ angular.module('ks.splitter', [])
                 throw 'splitter must have two panes';
               }
 
-              scope.panes[0].size = parseInt(scope.panes[0].elem.attr('size'));
-
             },
 
-            post: function(scope, element, attrs){
+            post: function(scope, element, attrs) {
 
-              var handler = $('<div class="split-handler"></div>');
+              /*
+              var collapseBtn = '<button type="button" class="collapse">' +
+                  '<span class="fa fa-caret-left" aria-hidden="true"></span>' +
+                  '</button>';
+*/
+
+              var collapseBtn = '<span class="collapse fa fa-caret-left" aria-hidden="true"></span>';
+              var splitHandler = '<div class="split-handler">' + collapseBtn + '</div>';
+              
+              
+              var isCollapsed = false;
+              var initSize = parseInt(attrs.initSize);
+
+              var $handler = $(splitHandler);
               var pane1 = scope.panes[0];
               var pane2 = scope.panes[1];
               var vertical = attrs.orientation == 'vertical';
@@ -37,16 +48,16 @@ angular.module('ks.splitter', [])
               var pane2Min = pane2.minSize || 0;
               var drag = false;
 
-              pane1.elem.after(handler);
+              pane1.elem.after($handler);
 
-              function setPosition(params){
+              function setPosition(params) {
                 if (vertical) {
 
                   var height = params.bounds.bottom - params.bounds.top;
                   if (params.position < pane1Min) return;
                   if (height - params.position < pane2Min) return;
 
-                  handler.css('top', params.position + 'px');
+                  $handler.css('top', params.position + 'px');
                   pane1.elem.css('height', params.position + 'px');
                   pane2.elem.css('top', params.position + 'px');
 
@@ -55,7 +66,7 @@ angular.module('ks.splitter', [])
                   if (params.position < pane1Min) return;
                   if (width - params.position < pane2Min) return;
 
-                  handler.css('left', params.position + 'px');
+                  $handler.css('left', params.position + 'px');
                   pane1.elem.css('width', params.position + 'px');
                   pane2.elem.css('left', params.position + 'px');
                 }
@@ -68,7 +79,7 @@ angular.module('ks.splitter', [])
                 var params = {
                   position: 0,
                   bounds: bounds
-              };
+                };
 
                 if (vertical) {
                   params.position = ev.clientY - bounds.top;
@@ -78,30 +89,52 @@ angular.module('ks.splitter', [])
                 setPosition(params);
               };
 
-              function mouseupHandler (ev) {
+              function mouseupHandler(ev) {
                 drag = false;
               };
 
-              function mousedownHandler (ev) {
+              function mousedownHandler(ev) {
                 ev.preventDefault();
                 drag = true;
               }
 
-
-              if(pane1.size){
-                setPosition({ position: pane1.size, bounds: element[0].getBoundingClientRect() });
+              function collpseClick(){
+                var width = pane1.elem.css('width');
+                if(isCollapsed){
+                  pane1.elem.css('left', '');
+                  $handler.css('left', width);
+                  $collapseBtn.addClass('fa-caret-left');
+                  $collapseBtn.removeClass('fa-caret-right');
+                } else {
+                  pane1.elem.css('left', '-' + width);
+                  $handler.css('left', '');
+                  $collapseBtn.removeClass('fa-caret-left');
+                  $collapseBtn.addClass('fa-caret-right');
+                }
+                isCollapsed = !isCollapsed;
               }
 
+              if (!isNaN(initSize)) {
+                setPosition({ position: initSize, bounds: element[0].getBoundingClientRect() });
+              }
+              else {
+                $handler.css('left', '50%');
+              }
+
+              var $collapseBtn = $handler.children('.collapse');
+              $collapseBtn.on('click', collpseClick)
+              
               element.on('mousemove', mousemoveHandler);
 
-              handler.on('mousedown', mousedownHandler);
+              $handler.on('mousedown', mousedownHandler);
 
               var doc = angular.element(document);
               doc.on('mouseup', mouseupHandler);
 
-              scope.$on('$destroy', function(){
+              scope.$on('$destroy', function () {
                 element.off('mousemove', mousemoveHandler);
-                handler.off('mousedown', mousedownHandler);
+                $handler.off('mousedown', mousedownHandler);
+                $collapseBtn.off('click', collpseClick)
                 doc.off('mouseup', mouseupHandler);
               });
 
