@@ -69,7 +69,7 @@ angular.module('ks.splitter', [])
                   pane1.elem.css('width', params.position + 'px');
                   pane2.elem.css('left', params.position + 'px');
                 }
-                $(document).trigger('resize')
+                $(document).trigger('resize');
               }
 
               function mousemoveHandler(ev) {
@@ -116,6 +116,7 @@ angular.module('ks.splitter', [])
                   $collapseBtn.addClass('fa-caret-right');
                 }
                 isCollapsed = !isCollapsed;
+                $(document).trigger('resize');
               }
 
               if (!isNaN(initSize)) {
