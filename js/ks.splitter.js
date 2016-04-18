@@ -33,7 +33,7 @@ angular.module('ks.splitter', [])
                   '</button>';
 */
 
-              var collapseBtn = '<span class="collapse fa fa-caret-left" aria-hidden="true"></span>';
+              var collapseBtn = '<span class="collapse-btn fa fa-caret-left" aria-hidden="true"></span>';
               var splitHandler = '<div class="split-handler">' + collapseBtn + '</div>';
               
               
@@ -73,7 +73,7 @@ angular.module('ks.splitter', [])
               }
 
               function mousemoveHandler(ev) {
-                if (!drag) return;
+                if (!drag || isCollapsed) return;
 
                 var bounds = element[0].getBoundingClientRect();
                 var params = {
@@ -126,7 +126,7 @@ angular.module('ks.splitter', [])
                 pane2.elem.css('left', '50%');
               }
 
-              var $collapseBtn = $handler.children('.collapse');
+              var $collapseBtn = $handler.children('.collapse-btn');
               $collapseBtn.on('click', collpseClick)
               
               element.on('mousemove', mousemoveHandler);

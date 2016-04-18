@@ -43,11 +43,11 @@
   overflow-y: auto;
 }
 
-.split-panes.horizontal.split-collapsed > .split-pane2{
+.split-panes.horizontal.split-collapsed > .split-pane2 {
   width: 100%;
 }
 
-.split-panes.horizontal > .split-handler > .collapse {
+.split-panes.horizontal > .split-handler > .collapse-btn {
   position: absolute;
   top: 50%;
   color: #333;
@@ -58,7 +58,6 @@
   cursor: pointer;
   left: 0;
   margin-top: -20px;
-
 }
 
 .split-panes.horizontal > .split-handler:hover {
@@ -69,6 +68,15 @@
   background-color: #3f515b;
 }
 
+
+.split-panes.horizontal.split-collapsed > .split-handler:hover,
+.split-panes.horizontal.split-collapsed > .split-handler:active {
+  background-color: rgba(60, 70, 80, 0.15);
+}
+
+.split-panes.horizontal.split-collapsed > .split-handler {
+  cursor: default;
+}
 
 /* Vertical */
 
