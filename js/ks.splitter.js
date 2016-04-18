@@ -52,7 +52,6 @@ angular.module('ks.splitter', [])
 
               function setPosition(params) {
                 if (vertical) {
-
                   var height = params.bounds.bottom - params.bounds.top;
                   if (params.position < pane1Min) return;
                   if (height - params.position < pane2Min) return;
@@ -70,6 +69,7 @@ angular.module('ks.splitter', [])
                   pane1.elem.css('width', params.position + 'px');
                   pane2.elem.css('left', params.position + 'px');
                 }
+                $(document).trigger('resize')
               }
 
               function mousemoveHandler(ev) {
@@ -102,11 +102,13 @@ angular.module('ks.splitter', [])
                 var width = pane1.elem.css('width');
                 if(isCollapsed){
                   pane1.elem.css('left', '');
+                  pane2.elem.css('left', width);
                   $handler.css('left', width);
                   $collapseBtn.addClass('fa-caret-left');
                   $collapseBtn.removeClass('fa-caret-right');
                 } else {
                   pane1.elem.css('left', '-' + width);
+                  pane2.elem.css('left', '');
                   $handler.css('left', '');
                   $collapseBtn.removeClass('fa-caret-left');
                   $collapseBtn.addClass('fa-caret-right');
@@ -119,6 +121,7 @@ angular.module('ks.splitter', [])
               }
               else {
                 $handler.css('left', '50%');
+                pane2.elem.css('left', '50%');
               }
 
               var $collapseBtn = $handler.children('.collapse');

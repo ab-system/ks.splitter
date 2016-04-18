@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <meta charset=utf-8 />
+  <title>ks-splitter</title>
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" type="text/css" />
+
+  <link rel="stylesheet" href="kendoUI/kendo.common-bootstrap.css" />
+  <link rel="stylesheet" href="kendoUI/kendo.bootstrap.css" />
+  <style>
+    body
+    {
+      margin: 0px;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .pane-container
+    {
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+
+
+  <div ks-splitter="" orientation="horizontal" init-size="500">
+    <div ks-pane="" min-size="100" style="background-color: red">
+      <div ks-pane-container>
+        <div>pane1</div>
+      </div>
+    </div>
+
+    <div ks-pane="" min-size="100">
+      <div ks-pane-container>
+        <div>
+
+          <div id="example">
+            <div id="grid"></div>
+
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="kendoUI/kendo.all.js"></script>
+  <script src="js/ks.splitter.js"></script>
+
+  <script>
+    angular.module('myApp', ['ks.splitter']);
+  </script>
+
+  <script>
+    $(document).ready(function () {
+      $("#grid").kendoGrid({
+        dataSource: {
+          type: "odata",
+          transport: {
+            read: "//demos.telerik.com/kendo-ui/service/Northwind.svc/Customers"
+          },
+          pageSize: 20
+        },
+        height: 550,
+        groupable: true,
+        sortable: true,
+        pageable: {
+          refresh: true,
+          pageSizes: true,
+          buttonCount: 5
+        },
+        columns: [{
+          template: "<div class='customer-photo'" +
+          "style='background-image: url(../content/web/Customers/#:data.CustomerID#.jpg);'></div>" +
+          "<div class='customer-name'>#: ContactName #</div>",
+          field: "ContactName",
+          title: "Contact Name",
+          width: 240
+        }, {
+          field: "ContactTitle",
+          title: "Contact Title"
+        }, {
+          field: "CompanyName",
+          title: "Company Name"
+        }, {
+          field: "Country",
+          width: 150
+        }]
+      });
+    });
+  </script>
+</body>
+</html>

@@ -40,7 +40,7 @@
 
 .split-panes.horizontal > .split-pane2
 {
-  left: 50%;
+  /*left: 50%;*/
   right: 0px;
   overflow-y: auto
 }
@@ -61,6 +61,10 @@
 
 .split-panes.horizontal > .split-handler:hover {
   background-color: rgba(60, 70, 80, 0.5);
+}
+
+.split-panes.horizontal > .split-handler:active {
+  background-color: #3f515b;
 }
 
 
