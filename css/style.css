@@ -33,16 +33,15 @@
   height: 100%;
 }
 
-.split-panes.horizontal > .split-pane1
-{
+.split-panes.horizontal > .split-pane1 {
   width: 50%;
 }
 
-.split-panes.horizontal > .split-pane2
-{
+.split-panes.horizontal > .split-pane2 {
   /*left: 50%;*/
   right: 0px;
-  overflow-y: auto
+  overflow-y: auto;
+  width: 100%;
 }
 
 .split-panes.horizontal > .split-handler > .collapse {
