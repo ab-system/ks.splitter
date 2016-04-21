@@ -62,8 +62,12 @@ angular.module('ks.splitter', [])
 
                 } else {
                   var width = params.bounds.right - params.bounds.left;
-                  if (params.position < pane1Min) return;
-                  if (width - params.position < pane2Min) return;
+                  if (params.position < pane1Min) {
+                       params.position = pane1Min;
+                  };
+                  if (width - params.position < pane2Min) {
+                      params.position = width - pane2Min;
+                  };
 
                   $handler.css('left', params.position + 'px');
                   pane1.elem.css('width', params.position + 'px');
