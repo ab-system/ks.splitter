@@ -47,7 +47,7 @@ angular.module('ks.splitter', [])
               var pane1Min = pane1.minSize || 0;
               var pane2Min = pane2.minSize || 0;
               var drag = false;
-
+              var $window = $(window);
               pane1.elem.after($handler);
 
               function setPosition(params) {
@@ -73,7 +73,8 @@ angular.module('ks.splitter', [])
                   pane1.elem.css('width', params.position + 'px');
                   pane2.elem.css('left', params.position + 'px');
                 }
-                $(document).trigger('resize');
+                $window.trigger('resize');
+                $window.trigger('ks.splitter.resize');
               }
 
               function mousemoveHandler(ev) {
@@ -95,6 +96,7 @@ angular.module('ks.splitter', [])
 
               function mouseupHandler(ev) {
                 drag = false;
+                $window.trigger('ks.splitter.resizeEnd');
               };
 
               function mousedownHandler(ev) {
